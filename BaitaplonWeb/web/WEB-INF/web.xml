@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+    <display-name>BaitaplonWeb</display-name>
+
+    <!-- Đăng nhập Facebook / Google: thay YOUR_* bằng App ID / Secret thật; Redirect URI = {context}/oauth/callback -->
+    <context-param>
+        <param-name>oauth.facebook.app.id</param-name>
+        <param-value>YOUR_FACEBOOK_APP_ID</param-value>
+    </context-param>
+    <context-param>
+        <param-name>oauth.facebook.app.secret</param-name>
+        <param-value>YOUR_FACEBOOK_APP_SECRET</param-value>
+    </context-param>
+    <context-param>
+        <param-name>oauth.google.client.id</param-name>
+        <param-value>678302869908-b0o6d4ukdmg1g4o7mqk948829snqs1qs.apps.googleusercontent.com</param-value>
+    </context-param>
+    <context-param>
+        <param-name>oauth.google.client.secret</param-name>
+        <param-value>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</param-value>
+    </context-param>
+</web-app>
