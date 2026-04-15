@@ -153,6 +153,7 @@
             Connection conn = null;
             PreparedStatement psDon = null;
             PreparedStatement psCt = null;
+            PreparedStatement psUpdateStock = null;
             try {
                 conn = Ketnoicsdl.ketnoi();
                 if (conn == null) {
@@ -167,14 +168,19 @@
                     psDon.executeUpdate();
 
                     psCt = conn.prepareStatement("INSERT INTO chitietdonhang(madonhang, sanpham, soluong, thanhtien) VALUES(?,?,?,?)");
+                    psUpdateStock = conn.prepareStatement("UPDATE tt_sanpham SET soluong = CASE WHEN soluong > 0 THEN soluong - 1 ELSE 0 END WHERE masp = ?");
                     for (CartLine line : lines) {
                         psCt.setString(1, madon);
                         psCt.setString(2, line.product.getTensp());
                         psCt.setInt(3, line.qty);
                         psCt.setDouble(4, line.lineTotal);
                         psCt.addBatch();
+
+                        psUpdateStock.setInt(1, line.product.getMasp());
+                        psUpdateStock.addBatch();
                     }
                     psCt.executeBatch();
+                    psUpdateStock.executeBatch();
                     conn.commit();
 
                     cart.clear();
@@ -199,6 +205,7 @@
                 } catch (SQLException ignore) {
                 }
             } finally {
+                try { if (psUpdateStock != null) psUpdateStock.close(); } catch (SQLException ignore) {}
                 try { if (psCt != null) psCt.close(); } catch (SQLException ignore) {}
                 try { if (psDon != null) psDon.close(); } catch (SQLException ignore) {}
                 try { if (conn != null) conn.close(); } catch (SQLException ignore) {}

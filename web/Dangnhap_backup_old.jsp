@@ -3,15 +3,12 @@
         <%@ page import="Controller.KhachhangDAO" %>
             <% if (session.getAttribute("khachhang") !=null) { response.sendRedirect("Trangchu.jsp"); return; } String
                 loi="" ; String registered=request.getParameter("registered"); String
-                reset=request.getParameter("reset"); String oauth=request.getParameter("oauth"); String
-                error=request.getParameter("error"); if ("POST".equalsIgnoreCase(request.getMethod())) { String
-                email=request.getParameter("email"); String matkhau=request.getParameter("matkhau"); KhachhangDAO
-                dao=new KhachhangDAO(); Khachhang kh=dao.dangNhapBangEmailHoacTenDangNhap(email, matkhau); if (kh
-                !=null) { session.setAttribute("khachhang", kh); if (kh.getId()==1 || "admin"
-                .equalsIgnoreCase(kh.getTendangnhap())) { session.setAttribute("isAdmin", true); } else {
-                session.removeAttribute("isAdmin"); } response.sendRedirect("Trangchu.jsp"); return; }
-                loi="Sai email / tên đăng nhập hoặc mật khẩu." ; } String ctx=request.getContextPath(); String
-                emailValue=request.getParameter("email"); %>
+                reset=request.getParameter("reset"); String oauth=request.getParameter("oauth"); if
+                ("POST".equalsIgnoreCase(request.getMethod())) { String email=request.getParameter("email"); String
+                matkhau=request.getParameter("matkhau"); KhachhangDAO dao=new KhachhangDAO(); Khachhang
+                kh=dao.dangNhapBangEmailHoacTenDangNhap(email, matkhau); if (kh !=null) {
+                session.setAttribute("khachhang", kh); response.sendRedirect("Trangchu.jsp"); return; }
+                loi="Sai email / tên tài khoàn or mat khau." ; } String ctx=request.getContextPath(); %>
                 <!DOCTYPE html>
                 <html lang="vi">
 
@@ -134,88 +131,81 @@
                                                                             OAuth không thành công. Thử lại hoặc dùng
                                                                             email.</div>
                                                                         <% } %>
-                                                                            <% if ("1".equals(error)) { %>
-                                                                                <div class="auth-msg auth-msg--err">Sai
-                                                                                    tên đăng nhập hoặc mật khẩu.</div>
+                                                                            <% if (!loi.isEmpty()) { %>
+                                                                                <div class="auth-msg auth-msg--err">
+                                                                                    <%= loi %>
+                                                                                </div>
                                                                                 <% } %>
-                                                                                    <% if (!loi.isEmpty()) { %>
-                                                                                        <div
-                                                                                            class="auth-msg auth-msg--err">
-                                                                                            <%= loi %>
+
+                                                                                    <form class="auth-form"
+                                                                                        method="post"
+                                                                                        action="Dangnhap.jsp"
+                                                                                        autocomplete="on">
+                                                                                        <label for="email">Email
+                                                                                            *</label>
+                                                                                        <input id="email" name="email"
+                                                                                            type="text" required
+                                                                                            maxlength="100"
+                                                                                            placeholder="admin@gmail.com hoặc tên đăng nhập"
+                                                                                            value="<%= request.getParameter("
+                                                                                            email") !=null ?
+                                                                                            request.getParameter("email")
+                                                                                            : "" %>">
+
+                                                                                        <label for="matkhau">Mật khẩu
+                                                                                            *</label>
+                                                                                        <input id="matkhau"
+                                                                                            name="matkhau"
+                                                                                            type="password" required
+                                                                                            maxlength="255">
+
+                                                                                        <a class="login-forgot login-forgot--btn"
+                                                                                            href="Quenmatkhau.jsp">Quên
+                                                                                            mật khẩu</a>
+
+                                                                                        <div class="auth-actions">
+                                                                                            <button type="submit"
+                                                                                                class="login-submit-yellow">Đăng
+                                                                                                nhập</button>
                                                                                         </div>
-                                                                                        <% } %>
+                                                                                    </form>
 
-                                                                                            <form class="auth-form"
-                                                                                                method="post"
-                                                                                                action="<%= ctx %>/Dangnhap.jsp"
-                                                                                                autocomplete="on">
-                                                                                                <label for="email">Email
-                                                                                                    *</label>
-                                                                                                <input id="email"
-                                                                                                    name="email"
-                                                                                                    type="text" required
-                                                                                                    maxlength="100"
-                                                                                                    placeholder="admin@gmail.com hoặc tên đăng nhập"
-                                                                                                    value="<%= emailValue != null ? emailValue : "" %>">
-
-                                                                                                <label for="matkhau">Mật
-                                                                                                    khẩu *</label>
-                                                                                                <input id="matkhau"
-                                                                                                    name="matkhau"
-                                                                                                    type="password"
-                                                                                                    required
-                                                                                                    maxlength="255">
-
-                                                                                                <a class="login-forgot login-forgot--btn"
-                                                                                                    href="Quenmatkhau.jsp">Quên
-                                                                                                    mật khẩu</a>
-
-                                                                                                <div
-                                                                                                    class="auth-actions">
-                                                                                                    <button
-                                                                                                        type="submit"
-                                                                                                        class="login-submit-yellow">Đăng
-                                                                                                        nhập</button>
-                                                                                                </div>
-                                                                                            </form>
-
-                                                                                            <p
-                                                                                                class="social-login-title">
-                                                                                                Hoặc đăng nhập bằng</p>
-                                                                                            <div class="social-buttons">
-                                                                                                <a class="social-btn social-btn--fb"
-                                                                                                    href="<%= ctx %>/oauth/login?provider=facebook">
-                                                                                                    <svg viewBox="0 0 24 24"
-                                                                                                        fill="currentColor"
-                                                                                                        aria-hidden="true">
-                                                                                                        <path
-                                                                                                            d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z" />
-                                                                                                    </svg>
-                                                                                                    Facebook
-                                                                                                </a>
-                                                                                                <a class="social-btn social-btn--gg"
-                                                                                                    href="<%= ctx %>/oauth/login?provider=google">
-                                                                                                    <svg viewBox="0 0 24 24"
-                                                                                                        fill="currentColor"
-                                                                                                        aria-hidden="true">
-                                                                                                        <path
-                                                                                                            d="M12.545 10.239v3.821h5.445c-.712 2.315-2.647 3.972-5.445 3.972a6.033 6.033 0 110-12.064c1.498 0 2.866.549 3.921 1.453l2.814-2.814A9.969 9.969 0 0012.545 2C7.021 2 2.543 6.477 2.543 12s4.478 10 10.002 10c8.396 0 10.249-7.85 9.426-11.748l-9.426-.013z" />
-                                                                                                    </svg>
-                                                                                                    Google
-                                                                                                </a>
-                                                                                            </div>
+                                                                                    <p class="social-login-title">Hoặc
+                                                                                        đăng nhập bằng</p>
+                                                                                    <div class="social-buttons">
+                                                                                        <a class="social-btn social-btn--fb"
+                                                                                            href="<%= ctx %>/oauth/login?provider=facebook">
+                                                                                            <svg viewBox="0 0 24 24"
+                                                                                                fill="currentColor"
+                                                                                                aria-hidden="true">
+                                                                                                <path
+                                                                                                    d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z" />
+                                                                                            </svg>
+                                                                                            Facebook
+                                                                                        </a>
+                                                                                        <a class="social-btn social-btn--gg"
+                                                                                            href="<%= ctx %>/oauth/login?provider=google">
+                                                                                            <svg viewBox="0 0 24 24"
+                                                                                                fill="currentColor"
+                                                                                                aria-hidden="true">
+                                                                                                <path
+                                                                                                    d="M12.545 10.239v3.821h5.445c-.712 2.315-2.647 3.972-5.445 3.972a6.033 6.033 0 110-12.064c1.498 0 2.866.549 3.921 1.453l2.814-2.814A9.969 9.969 0 0012.545 2C7.021 2 2.543 6.477 2.543 12s4.478 10 10.002 10c8.396 0 10.249-7.85 9.426-11.748l-9.426-.013z" />
+                                                                                            </svg>
+                                                                                            Google
+                                                                                        </a>
+                                                                                    </div>
                                 </div>
                             </div>
 
                             <div class="trust-bar">
-                                <div><strong>Giao hàng Siêu Tốc</strong>2-4H nội thành</div>
+                                <div><strong>Giao hàng Siêu Tốc</strong>2–4H nội thành</div>
                                 <div><strong>7 ngày đổi trả</strong>Theo chính sách</div>
                                 <div><strong>100% chính hãng</strong>Cam kết sản phẩm</div>
                                 <div><strong>Thanh toán dễ dàng</strong>Tiền mặt, chuyển khoản</div>
                             </div>
 
                             <footer class="footer">
-                                <p>Bản quyền © 2026 - MemoryZone</p>
+                                <p>Bản quyền © 2026 — MemoryZone</p>
                                 <p>Thực hiện: Hoang Quoc Dai</p>
                             </footer>
                         </div>

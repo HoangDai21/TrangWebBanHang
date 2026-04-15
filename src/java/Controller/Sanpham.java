@@ -14,16 +14,20 @@ public class Sanpham {
     private String tensp;
     private double gia;
     private String thongtin;
+    private int soluong;
+    private String phanloai;
 
     public Sanpham() {
     }
 
-    public Sanpham(int masp, String hinhanh, String tensp, double gia, String thongtin) {
+    public Sanpham(int masp, String hinhanh, String tensp, double gia, String thongtin, int soluong, String phanloai) {
         this.masp = masp;
         this.hinhanh = hinhanh;
         this.tensp = tensp;
         this.gia = gia;
         this.thongtin = thongtin;
+        this.soluong = soluong;
+        this.phanloai = phanloai;
     }
 
     public int getMasp() {
@@ -64,6 +68,22 @@ public class Sanpham {
 
     public void setThongtin(String thongtin) {
         this.thongtin = thongtin;
+    }
+
+    public int getSoluong() {
+        return soluong;
+    }
+
+    public void setSoluong(int soluong) {
+        this.soluong = soluong;
+    }
+
+    public String getPhanloai() {
+        return phanloai;
+    }
+
+    public void setPhanloai(String phanloai) {
+        this.phanloai = phanloai;
     }
     
 }

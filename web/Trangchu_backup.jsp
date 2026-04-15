@@ -5,12 +5,11 @@
                 <%@ page import="java.text.DecimalFormat" %>
                     <%@ page import="java.util.List" %>
                         <% Khachhang khDangNhap=(Khachhang) session.getAttribute("khachhang"); String
-                            tenTaiKhoanHienThi="" ; boolean isAdmin=false; if (khDangNhap !=null) {
+                            tenTaiKhoanHienThi="" ; if (khDangNhap !=null) {
                             tenTaiKhoanHienThi=khDangNhap.getTentaikhoan(); if (tenTaiKhoanHienThi==null ||
                             tenTaiKhoanHienThi.trim().isEmpty()) { tenTaiKhoanHienThi=khDangNhap.getTendangnhap() !=null
-                            ? khDangNhap.getTendangnhap() : "" ; } isAdmin=khDangNhap.getId()==1 || "admin"
-                            .equalsIgnoreCase(khDangNhap.getTendangnhap()) ||
-                            Boolean.TRUE.equals(session.getAttribute("isAdmin")); } %>
+                            ? khDangNhap.getTendangnhap() : "" ; } } // Check if user is admin boolean isAdmin=false; if
+                            (khDangNhap !=null && "admin" .equals(khDangNhap.getTendangnhap())) { isAdmin=true; } %>
                             <!DOCTYPE html>
                             <html lang="vi">
 
@@ -19,32 +18,17 @@
                                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                                 <title>HĐStore - Thiết bị lưu trữ & Thiết bị mạng</title>
                                 <link rel="stylesheet" type="text/css" href="Css/style.css">
-                                <style>
-                                    /* Admin-specific styles */
-                                    .admin-controls {
-                                        position: fixed;
-                                        top: 80px;
-                                        right: 20px;
-                                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                                        color: white;
-                                        padding: 15px;
-                                        border-radius: 10px;
-                                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-                                        z-index: 1000;
-                                        min-width: 200px;
-                                    }
-                                </style>
-                            </head>
+
 
                             <body>
                                 <% if (isAdmin) { %>
                                     <div class="admin-controls">
-                                        <h3>QUẢN TRỊ</h3>
-                                        <a href="ThemSanpham.jsp" class="admin-btn">Thêm sản phẩm</a>
-                                        <a href="QuanlySanpham.jsp" class="admin-btn">Quản lý sản phẩm</a>
-                                        <a href="QuanlyDonhang.jsp" class="admin-btn">Quản lý đơn hàng</a>
-                                        <a href="QuanlyKhachhang.jsp" class="admin-btn">Quản lý khách hàng</a>
-                                        <a href="Thongke.jsp" class="admin-btn">Thống kê</a>
+                                        <h3>🔧 QUẢN TRỊ</h3>
+                                        <a href="ThemSanpham.jsp" class="admin-btn">➕ Thêm sản phẩm</a>
+                                        <a href="QuanlySanpham.jsp" class="admin-btn">📋 Quản lý sản phẩm</a>
+                                        <a href="QuanlyDonhang.jsp" class="admin-btn">📦 Quản lý đơn hàng</a>
+                                        <a href="QuanlyKhachhang.jsp" class="admin-btn">👥 Quản lý khách hàng</a>
+                                        <a href="Thongke.jsp" class="admin-btn">📊 Thống kê</a>
                                     </div>
                                     <% } %>
                                         <div class="sticky-top">
@@ -76,8 +60,7 @@
                                                             <path d="M20 20l-4.3-4.3" />
                                                         </svg>
                                                     </button>
-                                                    <div class="search-hints">Shop Router & Ổ Cứng · UltraDrive 1TB
-                                                        ·
+                                                    <div class="search-hints">Shop Router & Ổ Cứng · UltraDrive 1TB ·
                                                         Router
                                                         MaxSpeed AX3000 · WiFi Ultra Boost</div>
                                                 </form>
@@ -214,8 +197,7 @@
                                                                                 rx="2" />
                                                                             <circle cx="12" cy="12" r="2" />
                                                                         </svg></span>
-                                                                    <span class="cat-label">Thẻ nhớ (SD,
-                                                                        microSD)</span>
+                                                                    <span class="cat-label">Thẻ nhớ (SD, microSD)</span>
                                                                     <span class="cat-chevron">›</span>
                                                                 </a>
                                                             </li>
@@ -304,10 +286,9 @@
                                                                             fill="none" stroke="currentColor"
                                                                             stroke-width="1.6">
                                                                             <path
-                                                                                d="M12 3l2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4z" />
+                                                                                d="M12 3l2 4h4l-3 3 1 4-4-2-4 1-4h4z" />
                                                                         </svg></span>
-                                                                    <span class="cat-label">Phụ kiện lưu trữ (cáp,
-                                                                        box,
+                                                                    <span class="cat-label">Phụ kiện lưu trữ (cáp, box,
                                                                         dock)</span>
                                                                     <span class="cat-chevron">›</span>
                                                                 </a>
@@ -316,16 +297,15 @@
                                                     </aside>
 
                                                     <section class="content-panel">
+
                                                         <div class="hero-carousel" id="heroCarousel">
                                                             <div class="hero-banner">
                                                                 <div class="hero-slide active hero-slide--pc"
                                                                     data-index="0">
                                                                     <div class="hero-copy">
                                                                         <span class="hero-kicker">PC SIÊU TỐC</span>
-                                                                        <h1>Nhận ngay quà khủng khi mua PC Gaming
-                                                                        </h1>
-                                                                        <p>Ưu đãi Office, Windows 11 Pro và phụ kiện
-                                                                            đi
+                                                                        <h1>Nhận ngay quà khủng khi mua PC Gaming</h1>
+                                                                        <p>Ưu đãi Office, Windows 11 Pro và phụ kiện đi
                                                                             kèm —
                                                                             sẵn hàng giao nhanh tại MemoryZone.</p>
                                                                         <div class="hero-actions-row">
@@ -333,15 +313,12 @@
                                                                                 class="hero-primary">NHẬN
                                                                                 NGAY</a>
                                                                             <a href="category.jsp?q=pc"
-                                                                                class="hero-secondary">Xem cấu
-                                                                                hình</a>
+                                                                                class="hero-secondary">Xem cấu hình</a>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="hero-visual" aria-hidden="true">
-                                                                    </div>
+                                                                    <div class="hero-visual" aria-hidden="true"></div>
                                                                     <div class="hero-panel-card">
-                                                                        <div class="mini-offer">OFFICE PROFESSIONAL
-                                                                            PLUS
+                                                                        <div class="mini-offer">OFFICE PROFESSIONAL PLUS
                                                                         </div>
                                                                         <div class="mini-offer">WINDOWS 11 PRO</div>
                                                                         <div class="mini-offer">BÀN PHÍM &amp; CHUỘT
@@ -353,11 +330,9 @@
                                                                     data-index="1">
                                                                     <div class="hero-copy">
                                                                         <span class="hero-kicker">NuPhy</span>
-                                                                        <h1>Bàn phím cơ di động — gõ êm, mang đi mọi
-                                                                            nơi
+                                                                        <h1>Bàn phím cơ di động — gõ êm, mang đi mọi nơi
                                                                         </h1>
-                                                                        <p>Thiết kế mỏng nhẹ, layout đa dạng, phù
-                                                                            hợp
+                                                                        <p>Thiết kế mỏng nhẹ, layout đa dạng, phù hợp
                                                                             làm việc
                                                                             và chơi game.</p>
                                                                         <div class="hero-actions-row">
@@ -365,12 +340,10 @@
                                                                                 class="hero-primary">KHÁM
                                                                                 PHÁ</a>
                                                                             <a href="category.jsp?q=nuphy"
-                                                                                class="hero-secondary">So sánh
-                                                                                model</a>
+                                                                                class="hero-secondary">So sánh model</a>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="hero-visual" aria-hidden="true">
-                                                                    </div>
+                                                                    <div class="hero-visual" aria-hidden="true"></div>
                                                                     <div class="hero-panel-card">
                                                                         <div class="mini-offer">BẢO HÀNH CHÍNH HÃNG
                                                                         </div>
@@ -381,13 +354,10 @@
                                                                 <div class="hero-slide hero-slide--sandisk"
                                                                     data-index="2">
                                                                     <div class="hero-copy">
-                                                                        <span class="hero-kicker">Sandisk
-                                                                            FIFA</span>
-                                                                        <h1>World Cup 2026 Edition — lưu trữ phong
-                                                                            cách
+                                                                        <span class="hero-kicker">Sandisk FIFA</span>
+                                                                        <h1>World Cup 2026 Edition — lưu trữ phong cách
                                                                         </h1>
-                                                                        <p>Ổ di động &amp; thẻ nhớ phiên bản giới
-                                                                            hạn,
+                                                                        <p>Ổ di động &amp; thẻ nhớ phiên bản giới hạn,
                                                                             tốc độ
                                                                             cao cho game thủ.</p>
                                                                         <div class="hero-actions-row">
@@ -396,22 +366,18 @@
                                                                                 NGAY</a>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="hero-visual" aria-hidden="true">
-                                                                    </div>
+                                                                    <div class="hero-visual" aria-hidden="true"></div>
                                                                     <div class="hero-panel-card">
                                                                         <div class="mini-offer">USB 3.2 GEN 2</div>
-                                                                        <div class="mini-offer">THIẾT KẾ ĐỘC QUYỀN
-                                                                        </div>
+                                                                        <div class="mini-offer">THIẾT KẾ ĐỘC QUYỀN</div>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="hero-slide hero-slide--corsair"
                                                                     data-index="3">
                                                                     <div class="hero-copy">
-                                                                        <span class="hero-kicker">Corsair K70
-                                                                            Pro</span>
-                                                                        <h1>Mua kèm Stream Deck — combo streamer
-                                                                        </h1>
+                                                                        <span class="hero-kicker">Corsair K70 Pro</span>
+                                                                        <h1>Mua kèm Stream Deck — combo streamer</h1>
                                                                         <p>Switch quang, đèn RGB đồng bộ iCUE, phím
                                                                             macro tùy
                                                                             chỉnh.</p>
@@ -421,13 +387,10 @@
                                                                                 COMBO</a>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="hero-visual" aria-hidden="true">
-                                                                    </div>
+                                                                    <div class="hero-visual" aria-hidden="true"></div>
                                                                     <div class="hero-panel-card">
-                                                                        <div class="mini-offer">TẶNG STREAM DECK
-                                                                        </div>
-                                                                        <div class="mini-offer">PHẦN MỀM ĐỘC QUYỀN
-                                                                        </div>
+                                                                        <div class="mini-offer">TẶNG STREAM DECK</div>
+                                                                        <div class="mini-offer">PHẦN MỀM ĐỘC QUYỀN</div>
                                                                     </div>
                                                                 </div>
 
@@ -435,8 +398,7 @@
                                                                     <div class="hero-copy">
                                                                         <span class="hero-kicker">RTX 5070 Ti</span>
                                                                         <h1>Nhận quà giới hạn khi nâng cấp VGA</h1>
-                                                                        <p>Hiệu năng AI &amp; ray tracing thế hệ mới
-                                                                            —
+                                                                        <p>Hiệu năng AI &amp; ray tracing thế hệ mới —
                                                                             đủ cho 4K
                                                                             và VR.</p>
                                                                         <div class="hero-actions-row">
@@ -445,11 +407,9 @@
                                                                                 TRƯỚC</a>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="hero-visual" aria-hidden="true">
-                                                                    </div>
+                                                                    <div class="hero-visual" aria-hidden="true"></div>
                                                                     <div class="hero-panel-card">
-                                                                        <div class="mini-offer">QUÀ TẶNG GIỚI HẠN
-                                                                        </div>
+                                                                        <div class="mini-offer">QUÀ TẶNG GIỚI HẠN</div>
                                                                         <div class="mini-offer">TRẢ GÓP 0%</div>
                                                                     </div>
                                                                 </div>
@@ -470,8 +430,7 @@
                                                                 <button type="button" class="promo-tab" role="tab"
                                                                     aria-selected="false" data-slide="2">
                                                                     <span class="tab-title">Sandisk FIFA</span>
-                                                                    <span class="tab-sub">World Cup 2026
-                                                                        Edition</span>
+                                                                    <span class="tab-sub">World Cup 2026 Edition</span>
                                                                 </button>
                                                                 <button type="button" class="promo-tab" role="tab"
                                                                     aria-selected="false" data-slide="3">
@@ -512,15 +471,20 @@
                                                             <% if (isAdmin) { %>
                                                                 <div style="text-align: center; margin: 20px 0;">
                                                                     <a href="ThemSanpham.jsp" class="admin-add-product">
-                                                                        THÊM SẢN PHẨM
+                                                                        <svg width="20" height="20" viewBox="0 0 24 24"
+                                                                            fill="none" stroke="currentColor"
+                                                                            stroke-width="2">
+                                                                            <circle cx="12" cy="12" r="10" />
+                                                                            <path d="M12 8v8M8 12h8" />
+                                                                        </svg>
+                                                                        THÊM SẢN PHẨM MỚI
                                                                     </a>
                                                                 </div>
                                                                 <% } %>
 
                                                                     <% SanphamDAO sanphamDAO=new SanphamDAO();
                                                                         List<Sanpham>
-                                                                        danhSachSanpham =
-                                                                        sanphamDAO.layTatCaSanpham();
+                                                                        danhSachSanpham = sanphamDAO.layTatCaSanpham();
                                                                         DecimalFormat dinhDangTien = new
                                                                         DecimalFormat("#,###");
                                                                         %>
@@ -535,73 +499,77 @@
                                                                                 hinhAnh=sanpham.getHinhanh();%>
                                                                                 <article class="product-card"
                                                                                     data-detail-url="chitiet.jsp?id=<%= sanpham.getMasp()%>">
-                                                                                    <% if (hinhAnh !=null &&
-                                                                                        !hinhAnh.trim().isEmpty()) {%>
-                                                                                        <a href="chitiet.jsp?id=<%= sanpham.getMasp()%>"
-                                                                                            aria-label="Xem chi tiết <%= sanpham.getTensp()%>">
-                                                                                            <img src="<%= hinhAnh%>"
-                                                                                                alt="<%= sanpham.getTensp()%>">
-                                                                                        </a>
-                                                                                        <% } else { %>
-                                                                                            <div
-                                                                                                class="product-placeholder">
-                                                                                                Chưa có
-                                                                                                hình ảnh
-                                                                                            </div>
-                                                                                            <% }%>
-                                                                                                <div
-                                                                                                    class="product-body">
-                                                                                                    <h3>
-                                                                                                        <%=
-                                                                                                            sanpham.getTensp()%>
-                                                                                                    </h3>
-                                                                                                    <p class="price">
-                                                                                                        <%= giaHienThi%>
-                                                                                                            VNĐ
-                                                                                                    </p>
-                                                                                                    <p
-                                                                                                        class="product-info">
-                                                                                                        <strong>Phân
-                                                                                                            loại:</strong>
-                                                                                                        <%= sanpham.getPhanloai()
-                                                                                                            !=null ?
-                                                                                                            sanpham.getPhanloai()
-                                                                                                            : "Chưa phân loại"
-                                                                                                            %>
-                                                                                                    </p>
-                                                                                                    <p
-                                                                                                        class="product-info">
-                                                                                                        <strong>Mô
-                                                                                                            tả:</strong>
-                                                                                                        <%=
-                                                                                                            sanpham.getThongtin()%>
-                                                                                                    </p>
+
+                                                                                    <% if (isAdmin) { %>
+                                                                                        <div
+                                                                                            class="product-admin-actions">
+                                                                                            <a href="SuaSanpham.jsp?id=<%= sanpham.getMasp()%>"
+                                                                                                class="admin-action-btn admin-edit"
+                                                                                                title="Sửa sản phẩm">
+                                                                                                ✏️
+                                                                                            </a>
+                                                                                            <a href="XoaSanpham.jsp?id=<%= sanpham.getMasp()%>"
+                                                                                                class="admin-action-btn admin-delete"
+                                                                                                title="Xóa sản phẩm"
+                                                                                                onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">
+                                                                                                🗑️
+                                                                                            </a>
+                                                                                        </div>
+                                                                                        <% } %>
+
+                                                                                            <% if (hinhAnh !=null &&
+                                                                                                !hinhAnh.trim().isEmpty())
+                                                                                                {%>
+                                                                                                <a href="chitiet.jsp?id=<%= sanpham.getMasp()%>"
+                                                                                                    aria-label="Xem chi tiết <%= sanpham.getTensp()%>">
+                                                                                                    <img src="<%= hinhAnh%>"
+                                                                                                        alt="<%= sanpham.getTensp()%>">
+                                                                                                </a>
+                                                                                                <% } else { %>
                                                                                                     <div
-                                                                                                        class="product-card-footer">
-                                                                                                        <a class="detail-link"
-                                                                                                            href="chitiet.jsp?id=<%= sanpham.getMasp()%>">Xem
-                                                                                                            chi tiết</a>
-                                                                                                        <% if (isAdmin)
-                                                                                                            { %>
-                                                                                                            <div
-                                                                                                                class="admin-inline-actions">
-                                                                                                                <a href="ThemSanpham.jsp"
-                                                                                                                    class="admin-inline-btn">Thêm</a>
-                                                                                                                <a href="SuaSanpham.jsp?id=<%= sanpham.getMasp()%>"
-                                                                                                                    class="admin-inline-btn">Sửa</a>
-                                                                                                                <a href="XoaSanpham.jsp?id=<%= sanpham.getMasp()%>"
-                                                                                                                    class="admin-inline-btn admin-inline-btn--danger"
-                                                                                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">Xóa</a>
-                                                                                                            </div>
-                                                                                                            <% } %>
-                                                                                                    </div>
-                                                                                                </div>
+                                                                                                        class="product-placeholder">
+                                                                                                        Chưa có
+                                                                                                        hình ảnh</div>
+                                                                                                    <% }%>
+                                                                                                        <div
+                                                                                                            class="product-body">
+                                                                                                            <h3>
+                                                                                                                <%=
+                                                                                                                    sanpham.getTensp()%>
+                                                                                                            </h3>
+                                                                                                            <p
+                                                                                                                class="price">
+                                                                                                                <%=
+                                                                                                                    giaHienThi%>
+                                                                                                                    VNĐ
+                                                                                                            </p>
+                                                                                                            <p
+                                                                                                                class="product-info">
+                                                                                                                <strong>Phân
+                                                                                                                    loại:</strong>
+                                                                                                                <%= sanpham.getPhanloai()
+                                                                                                                    !=null
+                                                                                                                    ?
+                                                                                                                    sanpham.getPhanloai()
+                                                                                                                    : "Chưa phân loại"
+                                                                                                                    %>
+                                                                                                            </p>
+                                                                                                            <p
+                                                                                                                class="product-info">
+                                                                                                                <strong>Mô
+                                                                                                                    tả:</strong>
+                                                                                                                <%=
+                                                                                                                    sanpham.getThongtin()%>
+                                                                                                            </p>
+                                                                                                            <a class="detail-link"
+                                                                                                                href="chitiet.jsp?id=<%= sanpham.getMasp()%>">Xem
+                                                                                                                chi
+                                                                                                                tiết</a>
+                                                                                                        </div>
                                                                                 </article>
                                                                                 <% } } else { %>
-                                                                                    <div class="empty-state">Chưa có
-                                                                                        sản
-                                                                                        phẩm
-                                                                                        nào trong
+                                                                                    <div class="empty-state">Chưa có sản
+                                                                                        phẩm nào trong
                                                                                         bảng tt_sanpham.</div>
                                                                                     <% }%>
                                                                         </div>
@@ -609,16 +577,13 @@
                                                     </section>
 
                                                     <aside class="right-rail">
-                                                        <div class="rail-card rail-top">PC SIÊU TỐC<span>Giá tốt
-                                                                &amp;
+                                                        <div class="rail-card rail-top">PC SIÊU TỐC<span>Giá tốt &amp;
                                                                 sẵn hàng
                                                                 tại MemoryZone</span></div>
-                                                        <div class="rail-card rail-mid">NHẬN NGAY<span>Office,
-                                                                Windows,
+                                                        <div class="rail-card rail-mid">NHẬN NGAY<span>Office, Windows,
                                                                 bàn phím
                                                                 &amp; chuột</span></div>
-                                                        <div class="rail-card rail-bottom">ƯU ĐÃI<span>Khám phá sản
-                                                                phẩm
+                                                        <div class="rail-card rail-bottom">ƯU ĐÃI<span>Khám phá sản phẩm
                                                                 mới mỗi
                                                                 ngày</span></div>
                                                     </aside>
@@ -659,7 +624,7 @@
                                             data-chat-link="Lienhe.jsp">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                 stroke-width="1.8">
-                                                <path d="M21 12a8 8 0 01-8 8H8l-5 3 2-4a8 8 0 118-7z" />
+                                                <path d="M21 12a8 8 0 01-8 8H8l-5 3 2-4a8 8 0 018-7z" />
                                             </svg>
                                         </button>
 
