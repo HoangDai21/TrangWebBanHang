@@ -4,9 +4,9 @@
 <%@ page import="Controller.SanphamDAO" %>
 
 <%
-    // Check admin authentication
-    Khachhang khDangNhap = (Khachhang) session.getAttribute("khachhang");
-    if (khDangNhap == null || !"admin".equals(khDangNhap.getTendangnhap())) {
+    // Kiem tra quyen admin
+    Khachhang kh = (Khachhang) session.getAttribute("khachhang");
+    if (kh == null || !"admin".equals(kh.getTendangnhap())) {
         response.sendRedirect("Trangchu.jsp");
         return;
     }
@@ -14,7 +14,7 @@
     String error = null;
     String success = null;
 
-    // Process form submission
+    // Xu ly form submit
     if ("POST".equalsIgnoreCase(request.getMethod())) {
         String maspStr = request.getParameter("masp");
         String tensp = request.getParameter("tensp");
@@ -24,8 +24,7 @@
         String thongtin = request.getParameter("thongtin");
         String hinhanh = request.getParameter("hinhanh");
 
-        // Validate required fields
-        if (maspStr == null || tensp == null || giaStr == null || soluongStr == null || 
+        if (maspStr == null || tensp == null || giaStr == null || soluongStr == null ||
             phanloai == null || thongtin == null ||
             maspStr.isEmpty() || tensp.isEmpty() || giaStr.isEmpty() || soluongStr.isEmpty() ||
             phanloai.isEmpty() || thongtin.isEmpty()) {
@@ -36,32 +35,26 @@
                 double gia = Double.parseDouble(giaStr);
                 int soluong = Integer.parseInt(soluongStr);
 
-                // Validate values
                 if (gia < 0) {
-                    error = "Giá sản phẩm không được âm";
+                    error = "Giá không được âm";
                 } else if (soluong < 0) {
                     error = "Số lượng không được âm";
                 } else {
-                    // Check if product ID already exists
-                    SanphamDAO sanphamDAO = new SanphamDAO();
-                    Sanpham existing = sanphamDAO.laySanphamTheoId(masp);
+                    SanphamDAO dao = new SanphamDAO();
 
-                    if (existing != null) {
-                        error = "Mã sản phẩm đã tồn tại, vui lòng chọn mã khác";
+                    if (dao.laySanphamTheoId(masp) != null) {
+                        error = "Mã sản phẩm đã tồn tại";
                     } else {
-                        // Create new product
-                        Sanpham sanpham = new Sanpham();
-                        sanpham.setMasp(masp);
-                        sanpham.setTensp(tensp.trim());
-                        sanpham.setGia(gia);
-                        sanpham.setSoluong(soluong);
-                        sanpham.setPhanloai(phanloai);
-                        sanpham.setThongtin(thongtin.trim());
-                        sanpham.setHinhanh(hinhanh != null ? hinhanh.trim() : "");
+                        Sanpham sp = new Sanpham();
+                        sp.setMasp(masp);
+                        sp.setTensp(tensp.trim());
+                        sp.setGia(gia);
+                        sp.setSoluong(soluong);
+                        sp.setPhanloai(phanloai);
+                        sp.setThongtin(thongtin.trim());
+                        sp.setHinhanh(hinhanh != null ? hinhanh.trim() : "");
 
-                        // Add product
-                        boolean result = sanphamDAO.themSanpham(sanpham);
-                        if (result) {
+                        if (dao.themSanpham(sp)) {
                             success = "Thêm sản phẩm thành công!";
                         } else {
                             error = "Không thể thêm sản phẩm";
@@ -91,21 +84,15 @@
             padding: 30px;
             background: white;
             border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
-
         .admin-header {
             text-align: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 2px solid #f0f0f0;
         }
-
-        .admin-header h1 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-
+        .admin-header h1 { color: #333; margin-bottom: 10px; }
         .admin-badge {
             background: #ff6b6b;
             color: white;
@@ -115,46 +102,22 @@
             font-weight: bold;
             margin-left: 8px;
         }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
+        .form-group { margin-bottom: 20px; }
         .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: bold;
             color: #333;
         }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-group input, .form-group textarea, .form-group select {
             width: 100%;
             padding: 12px;
             border: 2px solid #ddd;
             border-radius: 5px;
             font-size: 14px;
-            transition: border-color 0.3s ease;
         }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .form-group textarea {
-            height: 100px;
-            resize: vertical;
-        }
-
-        .btn-container {
-            text-align: center;
-            margin-top: 30px;
-        }
-
+        .form-group textarea { height: 100px; resize: vertical; }
+        .btn-container { text-align: center; margin-top: 30px; }
         .btn {
             padding: 12px 30px;
             margin: 0 10px;
@@ -163,30 +126,14 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
         }
-
         .btn-primary {
             background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
             color: white;
         }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #5a6268;
-        }
-
+        .btn-secondary { background: #6c757d; color: white; }
         .error-message {
             color: #dc3545;
             background: #f8d7da;
@@ -195,7 +142,6 @@
             border-radius: 5px;
             margin-bottom: 20px;
         }
-
         .success-message {
             color: #155724;
             background: #d4edda;
@@ -209,21 +155,17 @@
 <body>
     <div class="admin-container">
         <div class="admin-header">
-            <h1>➕ THÊM SẢN PHẨM <span class="admin-badge">ADMIN</span></h1>
+            <h1>THÊM SẢN PHẨM <span class="admin-badge">ADMIN</span></h1>
             <p>Quản trị hệ thống HĐStore</p>
             <a href="TrangchuAdmin.jsp" class="btn btn-secondary" style="margin-top: 10px;">← Quay lại trang chủ</a>
         </div>
 
         <% if (error != null) { %>
-            <div class="error-message">
-                <%= error %>
-            </div>
+            <div class="error-message"><%= error %></div>
         <% } %>
 
         <% if (success != null) { %>
-            <div class="success-message">
-                <%= success %>
-            </div>
+            <div class="success-message"><%= success %></div>
         <% } %>
 
         <form method="post" action="ThemSanpham.jsp">
@@ -257,6 +199,10 @@
                     <option value="Thẻ nhớ">Thẻ nhớ</option>
                     <option value="Router">Router WiFi</option>
                     <option value="Switch">Switch mạng</option>
+                    <option value="RAM DDR2">RAM DDR2</option>
+                    <option value="RAM DDR3">RAM DDR3</option>
+                    <option value="RAM DDR4">RAM DDR4</option>
+                    <option value="RAM DDR5">RAM DDR5</option>
                     <option value="Phụ kiện">Phụ kiện</option>
                     <option value="Khác">Khác</option>
                 </select>
@@ -268,14 +214,14 @@
             </div>
 
             <div class="form-group">
-                <label for="hinhanh">Hình ảnh sản phẩm:</label>
-                <input type="text" id="hinhanh" name="hinhanh" placeholder="Nhập đường dẫn hình ảnh (VD: images/product.jpg)">
-                <small style="color: #666;">Để trống nếu chưa có hình ảnh</small>
+                <label for="hinhanh">Hình ảnh:</label>
+                <input type="text" id="hinhanh" name="hinhanh" placeholder="Nhập đường dẫn hình ảnh">
+                <small style="color: #666;">Để trống nếu chưa có</small>
             </div>
 
             <div class="btn-container">
                 <button type="submit" class="btn btn-primary">💾 Thêm sản phẩm</button>
-                <a href="TrangchuAdmin.jsp" class="btn btn-secondary">Hủy</a>
+                <a href="Trangchu.jsp" class="btn btn-secondary">Quay lại trang chủ</a>
             </div>
         </form>
     </div>

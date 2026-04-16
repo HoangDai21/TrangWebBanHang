@@ -4,7 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/TrangWebBanHang/web/Trangchu.jsp</file>
+            <file>file:/D:/TrangWebBanHang/web/index.html</file>
+            <file>file:/D:/TrangWebBanHang/src/java/Controller/SanphamDAO.java</file>
+            <file>file:/D:/TrangWebBanHang/web/ThemSanpham.jsp</file>
             <file>file:/D:/TrangWebBanHang/web/Trangchu_backup.jsp</file>
+            <file>file:/D:/TrangWebBanHang/web/chitiet.jsp</file>
+            <file>file:/D:/TrangWebBanHang/web/XoaSanpham.jsp</file>
+            <file>file:/D:/TrangWebBanHang/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
 </project-private>

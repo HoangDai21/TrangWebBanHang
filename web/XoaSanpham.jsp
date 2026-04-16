@@ -3,18 +3,18 @@
 <%@ page import="Controller.SanphamDAO" %>
 
 <%
-    // Check admin authentication
+    // Kiem tra quyen admin
     Khachhang khDangNhap = (Khachhang) session.getAttribute("khachhang");
     if (khDangNhap == null || !"admin".equals(khDangNhap.getTendangnhap())) {
         response.sendRedirect("Trangchu.jsp");
         return;
     }
 
-    // Get product ID from request
+    // Lay product ID tu request
     String maspStr = request.getParameter("id");
 
     if (maspStr == null || maspStr.isEmpty()) {
-        response.sendRedirect("TrangchuAdmin.jsp?error=Không tìm thấy sản phẩm cần xóa");
+        response.sendRedirect("Trangchu.jsp?error=Khong tim thay san pham can xoa");
         return;
     }
 
@@ -26,14 +26,14 @@
         boolean success = sanphamDAO.xoaSanpham(masp);
 
         if (success) {
-            response.sendRedirect("TrangchuAdmin.jsp?success=Xóa sản phẩm thành công");
+            response.sendRedirect("Trangchu.jsp?success=Xoa san pham thanh cong");
         } else {
-            response.sendRedirect("TrangchuAdmin.jsp?error=Không thể xóa sản phẩm");
+            response.sendRedirect("Trangchu.jsp?error=Khong the xoa san pham");
         }
 
     } catch (NumberFormatException e) {
-        response.sendRedirect("TrangchuAdmin.jsp?error=ID sản phẩm không hợp lệ");
+        response.sendRedirect("Trangchu.jsp?error=ID san pham khong hop le");
     } catch (Exception e) {
-        response.sendRedirect("TrangchuAdmin.jsp?error=Lỗi: " + e.getMessage());
+        response.sendRedirect("Trangchu.jsp?error=Loi: " + e.getMessage());
     }
 %>
